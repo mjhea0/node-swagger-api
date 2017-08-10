@@ -6,12 +6,26 @@ var options = {
 };
 
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/puppies';
-var db = pgp(connectionString);
+//var connectionString = 'postgres://localhost:5432/puppies';
+var cn = {
+    host: 'localhost', // server name or IP address;
+    port: 5432,
+    database: 'puppies',
+    user: 'postgres',
+    password: 'root'
+};
+
+var db = pgp(cn);
+
+function helloworld(req, res, next) {
+    res.send('hello world!');
+}
+
 
 function getAllPuppies(req, res, next) {
   db.any('select * from pups')
     .then(function (data) {
+        console.log(data);
       res.status(200)
         .json({
           status: 'success',
@@ -20,6 +34,7 @@ function getAllPuppies(req, res, next) {
         });
     })
     .catch(function (err) {
+        console.log(err);
       return next(err);
     });
 }
@@ -41,6 +56,7 @@ function getSinglePuppy(req, res, next) {
 }
 
 function createPuppy(req, res, next) {
+    console.log(req.body);
   req.body.age = parseInt(req.body.age);
   db.none('insert into pups(name, breed, age, sex)' +
       'values(${name}, ${breed}, ${age}, ${sex})',
@@ -53,6 +69,7 @@ function createPuppy(req, res, next) {
         });
     })
     .catch(function (err) {
+        console.log(err);
       return next(err);
     });
 }
@@ -96,5 +113,6 @@ module.exports = {
   getSinglePuppy: getSinglePuppy,
   createPuppy: createPuppy,
   updatePuppy: updatePuppy,
-  removePuppy: removePuppy
+  removePuppy: removePuppy,
+    helloword: helloworld
 };
