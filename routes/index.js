@@ -5,7 +5,7 @@ var db = require('../queries');
 
 /**
  * @swagger
- * definition:
+ * definitions:
  *   Puppy:
  *     properties:
  *       name:
