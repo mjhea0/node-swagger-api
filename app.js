@@ -14,7 +14,7 @@ var app = express();
 var swaggerDefinition = {
   info: {
     title: 'Node Swagger API',
-    version: '1.0.0',
+    version: '1.0.1',
     description: 'Demonstrating how to desribe a RESTful API with Swagger',
   },
   host: 'localhost:3000',
